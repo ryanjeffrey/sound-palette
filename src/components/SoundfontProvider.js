@@ -3,8 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Soundfont from 'soundfont-player';
-import { useContext } from 'react';
-import { ColorContext } from '../ColorContext';
+import { midiToColor } from '../color-data';
 
 class SoundfontProvider extends React.Component {
   
@@ -64,6 +63,7 @@ class SoundfontProvider extends React.Component {
     this.props.audioContext.resume().then(() => {
       const audioNode = this.state.instrument.play(midiNumber);
       console.log(midiToColor[midiNumber]);
+      console.log(midiNumber);
       this.props.setCurrentBackground(midiToColor[midiNumber]);
       this.setState({
         activeAudioNodes: Object.assign({}, this.state.activeAudioNodes, {
@@ -115,6 +115,4 @@ class SoundfontProvider extends React.Component {
 
 export default SoundfontProvider;
 
-const midiToColor = {
-  48: 'red',
-};
+
