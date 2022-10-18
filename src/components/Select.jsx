@@ -5,11 +5,18 @@ import { InstrumentContext } from '../InstrumentContext';
 function Select() {
   const { setInstrument, instrument } = useContext(InstrumentContext);
   console.log(instrument);
-//clickhandler to set the e.target.value
-//select.blur to deselect the dropdown
+  //clickhandler to set the e.target.value
+
+  const soundHandler = (e) => {
+    setInstrument(e.target.value);
+    const select = document.getElementById('select');
+    select.blur();
+  };
+
+  //select.blur to deselect the dropdown
   return (
     <div>
-      <select value={instrument} onChange={(e) => setInstrument(e.target.value)} >
+      <select id="select" value={instrument} onChange={soundHandler}>
         <option value="accordion">accordion</option>
         <option value="acoustic_bass">acoustic bass</option>
         <option value="acoustic_grand_piano">acoustic grand piano</option>
