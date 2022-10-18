@@ -46,7 +46,7 @@ export default function SoundfontProvider({
       // console.log(midiToColor[midiNumber]);
       // console.log(midiNumber);
       setCurrentBackground([...currentBackground, midiToColor[midiNumber]]);
-      console.log(currentBackground);
+      console.log('on keydown', currentBackground);
       setActiveAudioNodes((prevState) => {
         return { ...prevState, [midiNumber]: audioNode };
       });
@@ -60,23 +60,38 @@ export default function SoundfontProvider({
       }
       // setCurrentBackground('white');
       const audioNode = activeAudioNodes[midiNumber];
-      audioNode.stop();
-      const newArray = (prevArray) => {
-        return prevArray.map((color) => {
-          console.log('color', color);
-          if (color !== midiToColor[midiNumber]) {
-            console.log('midi', midiToColor[midiNumber]);
-            return color;
-          }
-        });
-      };
-      console.log('newArray:', newArray(currentBackground));
-      setCurrentBackground(newArray(currentBackground));
+      // const newArray = (prevArray) => {
+      //   return prevArray.filter((color) => {
+      //     console.log('color', color);
+      //     color !== midiToColor[midiNumber];
+      //     // console.log('midi', midiToColor[midiNumber]);
+      //   });
+      // };
+      // console.log('currentBackground:', currentBackground);
+      setCurrentBackground((prevArray) =>
+        prevArray.filter((color) => {
+          // console.log('color', color);
+          return color !== midiToColor[midiNumber];
+          // console.log('midi', midiToColor[midiNumber]);
+        })
+      );
+      console.log('after keyup', currentBackground);
       setActiveAudioNodes((prevState) => {
         return { ...prevState, [midiNumber]: null };
       });
+      audioNode.stop();
+      // if (audionode === false) {
+
+      // setCurrentBackground(default)
+      // }
     });
   };
+
+  // cycle through array of colors
+  //
+  // apply color(s) for each keypress
+
+  // remove color(s) on keyup
 
   // const stopAllNotes = () => {
   //   audioContext.resume().then(() => {

@@ -3,7 +3,7 @@ import { useState, createContext } from 'react';
 const ColorContext = createContext();
 
 const ColorProvider = ({ children }) => {
-  const [currentBackground, setCurrentBackground] = useState([]);
+  const [currentBackground, setCurrentBackground] = useState(['red', 'blue']);
 
   return (
     <ColorContext.Provider value={{ currentBackground, setCurrentBackground }}>
