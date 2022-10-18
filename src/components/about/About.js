@@ -2,14 +2,30 @@ import './About.css';
 
 export default function About() {
 
-  function changeBackground() {
-    console.log('event');
-    document.body.backgroundColor = 'red';
+  function changeBackgroundJess() {
+    const aboutSection = document.querySelector('.about');
+    aboutSection.style.background = 
+    'linear-gradient(90deg, hsla(154, 100%, 76%, 1) 0%, hsla(234, 100%, 83%, 1) 50%, hsla(288, 100%, 81%, 1) 100%)';
+  }
+
+  function changeBackgroundNathan() {
+    const aboutSection = document.querySelector('.about');
+    aboutSection.style.background = 
+    'linear-gradient(90deg, hsla(270, 94%, 25%, 1) 0%, hsla(158, 94%, 49%, 1) 100%)';
+  }
+
+  function revertBackground() {
+    const aboutSection = document.querySelector('.about');
+    aboutSection.style.background = 'none';
+    aboutSection.style.backgroundColor = 'grey';
   }
 
   return (
     <div className="about">
-      <div className="nathan">
+      <div
+        onMouseEnter={changeBackgroundNathan}
+        onMouseLeave={revertBackground} 
+        className="nathan">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/nathan.jfif`} />
         <h2>Nathan Burgess</h2>
         <p>Full-Stack Software Developer living in Oregon</p>
@@ -37,7 +53,10 @@ export default function About() {
         </div>
       </div>
 
-      <div onMouseOver={changeBackground} className="jessica">
+      <div 
+        onMouseEnter={changeBackgroundJess}
+        onMouseLeave={revertBackground}
+        className="jessica">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/jessica.jpg`} />
         <h2>Jessica Martin</h2>
         <p>Full-Stack Software Developer living in Oregon</p>
