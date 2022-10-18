@@ -5,15 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ColorProvider } from './ColorContext';
 import { BrowserRouter } from 'react-router-dom';
+import { InstrumentProvider } from './InstrumentContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ColorProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ColorProvider>  
+      <InstrumentProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </InstrumentProvider>
+    </ColorProvider>
   </React.StrictMode>
 );
 

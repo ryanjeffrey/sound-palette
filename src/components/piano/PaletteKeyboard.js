@@ -1,7 +1,8 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import 'react-piano/dist/styles.css';
 import { ColorContext } from '../../ColorContext';
+import { InstrumentContext } from '../../InstrumentContext';
 import SoundfontProvider from '../SoundfontProvider';
 
 import './PaletteKeyboard.css';
@@ -10,13 +11,13 @@ import './PaletteKeyboard.css';
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
 
-
 const noteRange = {
   first: MidiNumbers.fromNote('c3'),
   last: MidiNumbers.fromNote('f4'),
 };
 
 export function PaletteKeyboard() {
+  const { instrument } = useContext(InstrumentContext);
   const { setCurrentBackground } = useContext(ColorContext);
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
@@ -27,11 +28,11 @@ export function PaletteKeyboard() {
   });
 
   return (
-    <div className='piano-wrapper'>
+    <div className="piano-wrapper">
       <SoundfontProvider
         keyboardShortcuts={keyboardShortcuts}
         noteRange={noteRange}
-        instrumentName="acoustic_grand_piano"
+        instrumentName={instrument}
         audioContext={audioContext}
         hostname={soundfontHostname}
         setCurrentBackground={setCurrentBackground}

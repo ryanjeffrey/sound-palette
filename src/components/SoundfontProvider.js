@@ -7,7 +7,7 @@ import { Piano } from 'react-piano';
 import { ColorContext } from '../ColorContext';
 
 export default function SoundfontProvider({
-  instrumentName = 'acoustic_grand_piano',
+  instrumentName = '',
   audioContext,
   format = 'mp3',
   soundfont = 'MusyngKite',
