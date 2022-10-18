@@ -17,7 +17,7 @@ const noteRange = {
 };
 
 export function PaletteKeyboard() {
-  const { currentBackground, setCurrentBackground } = useContext(ColorContext);
+  const { setCurrentBackground } = useContext(ColorContext);
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f5');
   const keyboardShortcuts = KeyboardShortcuts.create({
