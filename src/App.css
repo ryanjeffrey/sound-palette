@@ -1,8 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;500&display=swap');
+
+* {
+ font-family: 'Jura', sans-serif;
+}
+
 .App {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   transition: background-color 1s ease;
+ 
 }
 
