@@ -1,7 +1,6 @@
 // See https://github.com/danigb/soundfont-player
 // for more documentation on prop options.
 import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Soundfont from 'soundfont-player';
 import { midiToColor } from '../color-data';
 import { Piano } from 'react-piano';
@@ -46,7 +45,6 @@ export default function SoundfontProvider({
       // console.log(midiToColor[midiNumber]);
       // console.log(midiNumber);
       setCurrentBackground([...currentBackground, midiToColor[midiNumber]]);
-      console.log('on keydown', currentBackground);
       setActiveAudioNodes((prevState) => {
         return { ...prevState, [midiNumber]: audioNode };
       });
@@ -75,7 +73,6 @@ export default function SoundfontProvider({
           // console.log('midi', midiToColor[midiNumber]);
         })
       );
-      console.log('after keyup', currentBackground);
       setActiveAudioNodes((prevState) => {
         return { ...prevState, [midiNumber]: null };
       });
