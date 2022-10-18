@@ -1,0 +1,38 @@
+.logo {
+    height: 30px;
+    margin: 0px 5px;
+}
+
+.headshot {
+    height: 160px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.about {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgb(167, 165, 165);
+
+}
+
+.jessica, .ryanp, .ryans, .nathan, .eddie {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.226);
+    padding: 10px;
+    font-size: 10px;
+    text-align: center;
+    color: white;
+    border-radius: 5%;
+}
+
+p {
+    width: 150px;
+    padding-bottom: 10px;
+}
