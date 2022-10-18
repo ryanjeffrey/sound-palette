@@ -14,6 +14,24 @@ export default function About() {
     'linear-gradient(90deg, hsla(270, 94%, 25%, 1) 0%, hsla(158, 94%, 49%, 1) 100%)';
   }
 
+  function changeBackgroundEddie() {
+    const aboutSection = document.querySelector('.about');
+    aboutSection.style.background = 
+    'linear-gradient(90deg, hsla(202, 71%, 27%, 1) 0%, hsla(176, 45%, 66%, 1) 100%)';
+  }
+
+  function changeBackgroundRyanP() {
+    const aboutSection = document.querySelector('.about');
+    aboutSection.style.background = 
+    'linear-gradient(90deg, hsla(154, 53%, 82%, 1) 0%, hsla(24, 88%, 65%, 1) 50%, hsla(216, 56%, 16%, 1) 100%)';
+  }
+
+  function changeBackgroundRyanS() {
+    const aboutSection = document.querySelector('.about');
+    aboutSection.style.background = 
+    'linear-gradient(90deg, hsla(230, 59%, 25%, 1) 0%, hsla(359, 73%, 39%, 1) 50%, hsla(32, 97%, 59%, 1) 100%)';
+  }
+
   function revertBackground() {
     const aboutSection = document.querySelector('.about');
     aboutSection.style.background = 'none';
@@ -39,7 +57,10 @@ export default function About() {
         </div>
       </div>
 
-      <div className="eddie">
+      <div 
+        onMouseEnter={changeBackgroundEddie}
+        onMouseLeave={revertBackground}
+        className="eddie">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/eddie.png`} />
         <h2>Eddie Kuo</h2>
         <p>Full-Stack Software Developer living in Texas</p>
@@ -70,7 +91,10 @@ export default function About() {
         </div>
       </div>
 
-      <div className="ryanp">
+      <div 
+        onMouseEnter={changeBackgroundRyanP}
+        onMouseLeave={revertBackground}
+        className="ryanp">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/ryanparker.png`} />
         <h2>Ryan Parker</h2>
         <p>Full-Stack Software Developer living in Oregon</p>
@@ -84,7 +108,10 @@ export default function About() {
         </div>
       </div>
 
-      <div className="ryans">
+      <div
+        onMouseEnter={changeBackgroundRyanS}
+        onMouseLeave={revertBackground}
+        className="ryans">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/ryansmith.jfif`} />
         <h2>Ryan Smith</h2>
         <p>Full-Stack Software Developer living in Illinois</p>
