@@ -29,6 +29,8 @@ export function PaletteKeyboard() {
   return (
     <div className='piano-wrapper'>
       <SoundfontProvider
+        keyboardShortcuts={keyboardShortcuts}
+        noteRange={noteRange}
         instrumentName="acoustic_grand_piano"
         audioContext={audioContext}
         hostname={soundfontHostname}
