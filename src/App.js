@@ -11,7 +11,7 @@ function App() {
   // }
 
   return (
-    <div className="App" style={currentBackground.length < 2 ? { background: currentBackground[0] } : { background: `linear-gradient(${currentBackground.join(',')})` }}>
+    <div className="App" style={currentBackground.length < 2 ? { background: currentBackground[0] } : { background: `linear-gradient(90deg, ${currentBackground.join(',')})` }}>
       <PaletteKeyboard />
     </div>
   );
