@@ -40,6 +40,7 @@ export default function About() {
 
   return (
     <div className="about">
+      {/* <h1>Meet the Developers</h1> */}
       <div
         onMouseEnter={changeBackgroundNathan}
         onMouseLeave={revertBackground} 
