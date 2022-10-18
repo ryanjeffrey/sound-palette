@@ -13,11 +13,7 @@ function App() {
       <Header />
       <Switch>
         <Route path="/about" component={About} />
-        <Route path="/">
-          <div className="keyboard" >
-            <PaletteKeyboard />
-          </div>
-        </Route>
+        <Route path="/" component={PaletteKeyboard} />
       </Switch>
     </div>
   );
