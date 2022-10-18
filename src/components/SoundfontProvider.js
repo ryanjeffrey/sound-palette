@@ -1,21 +1,30 @@
 // See https://github.com/danigb/soundfont-player
 // for more documentation on prop options.
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
 import Soundfont from 'soundfont-player';
 import { midiToColor } from '../color-data';
 import { Piano } from 'react-piano';
+import { ColorContext } from '../ColorContext';
 
-export default function SoundfontProvider({ instrumentName = 'acoustic_grand_piano', audioContext, format = 'mp3', soundfont = 'MusyngKite', hostname, setCurrentBackground, noteRange, keyboardShortcuts }) {
+export default function SoundfontProvider({
+  instrumentName = 'acoustic_grand_piano',
+  audioContext,
+  format = 'mp3',
+  soundfont = 'MusyngKite',
+  hostname,
+  noteRange,
+  keyboardShortcuts,
+}) {
+  const { currentBackground, setCurrentBackground } = useContext(ColorContext);
   const [activeAudioNodes, setActiveAudioNodes] = useState({});
   const [instrument, setInstrument] = useState(null);
   // format: 'mp3',
-//     soundfont: 'MusyngKite',
-//     instrumentName: 'acoustic_grand_piano',
+  //     soundfont: 'MusyngKite',
+  //     instrumentName: 'acoustic_grand_piano',
   useEffect(() => {
     loadInstrument(instrumentName);
   }, [instrumentName]);
-  
+
   const loadInstrument = (instrumentName) => {
     // Re-trigger loading state
     setInstrument(null);
@@ -33,9 +42,9 @@ export default function SoundfontProvider({ instrumentName = 'acoustic_grand_pia
   const playNote = (midiNumber) => {
     audioContext.resume().then(() => {
       const audioNode = instrument.play(midiNumber);
-      console.log(midiToColor[midiNumber]);
-      console.log(midiNumber);
-      setCurrentBackground(midiToColor[midiNumber]);
+      // console.log(midiToColor[midiNumber]);
+      // console.log(midiNumber);
+      setCurrentBackground([...currentBackground, midiToColor[midiNumber]]);
       setActiveAudioNodes((prevState) => {
         return { ...prevState, [midiNumber]: audioNode };
       });
@@ -47,25 +56,51 @@ export default function SoundfontProvider({ instrumentName = 'acoustic_grand_pia
       if (!activeAudioNodes[midiNumber]) {
         return;
       }
+      // setCurrentBackground('white');
       const audioNode = activeAudioNodes[midiNumber];
-      audioNode.stop();
+      // const newArray = (prevArray) => {
+      //   return prevArray.filter((color) => {
+      //     console.log('color', color);
+      //     color !== midiToColor[midiNumber];
+      //     // console.log('midi', midiToColor[midiNumber]);
+      //   });
+      // };
+      // console.log('currentBackground:', currentBackground);
+      setCurrentBackground((prevArray) =>
+        prevArray.filter((color) => {
+          // console.log('color', color);
+          return color !== midiToColor[midiNumber];
+          // console.log('midi', midiToColor[midiNumber]);
+        })
+      );
       setActiveAudioNodes((prevState) => {
         return { ...prevState, [midiNumber]: null };
       });
+      audioNode.stop();
+      // if (audionode === false) {
+
+      // setCurrentBackground(default)
+      // }
     });
   };
 
-  const stopAllNotes = () => {
-    audioContext.resume().then(() => {
-      const activeAudioNodes = Object.values(activeAudioNodes);
-      activeAudioNodes.forEach((node) => {
-        if (node) {
-          node.stop();
-        }
-      });
-      setActiveAudioNodes({});
-    });
-  };
+  // cycle through array of colors
+  //
+  // apply color(s) for each keypress
+
+  // remove color(s) on keyup
+
+  // const stopAllNotes = () => {
+  //   audioContext.resume().then(() => {
+  //     const activeAudioNodes = Object.values(activeAudioNodes);
+  //     activeAudioNodes.forEach((node) => {
+  //       if (node) {
+  //         node.stop();
+  //       }
+  //     });
+  //     setActiveAudioNodes({});
+  //   });
+  // };
 
   return (
     <Piano
@@ -80,8 +115,7 @@ export default function SoundfontProvider({ instrumentName = 'acoustic_grand_pia
 }
 
 // class SoundfontProvider extends React.Component {
-  
-  
+
 //   static propTypes = {
 //     instrumentName: PropTypes.string.isRequired,
 //     hostname: PropTypes.string.isRequired,
@@ -177,7 +211,6 @@ export default function SoundfontProvider({ instrumentName = 'acoustic_grand_pia
 //   //   });
 //   // };
 
-  
 //   render() {
 //     return this.props.render({
 //       isLoading: !this.state.instrument,
@@ -189,5 +222,3 @@ export default function SoundfontProvider({ instrumentName = 'acoustic_grand_pia
 // }
 
 // export default SoundfontProvider;
-
-
