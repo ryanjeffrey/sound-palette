@@ -9,12 +9,12 @@ import About from './components/about/About';
 function App() {
   const { currentBackground } = useContext(ColorContext);
   return (
-    <div className="main-app">
+    <div className="App" style={{ backgroundColor: currentBackground }}>
       <Header />
       <Switch>
         <Route path="/about" component={About} />
         <Route path="/">
-          <div className="App" style={{ backgroundColor: currentBackground }}>
+          <div className="keyboard" >
             <PaletteKeyboard />
           </div>
         </Route>
