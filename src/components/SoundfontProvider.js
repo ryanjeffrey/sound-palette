@@ -2,7 +2,7 @@
 // for more documentation on prop options.
 import React, { useContext, useEffect, useState } from 'react';
 import Soundfont from 'soundfont-player';
-import { midiToColor } from '../color-data';
+// import { midiToColor } from '../color-data';
 import { Piano } from 'react-piano';
 import { ColorContext } from '../ColorContext';
 
@@ -15,7 +15,7 @@ export default function SoundfontProvider({
   noteRange,
   keyboardShortcuts,
 }) {
-  const { currentBackground, setCurrentBackground } = useContext(ColorContext);
+  const { currentBackground, setCurrentBackground, keyboardPalette } = useContext(ColorContext);
   const [activeAudioNodes, setActiveAudioNodes] = useState({});
   const [instrument, setInstrument] = useState(null);
   // format: 'mp3',
@@ -44,7 +44,7 @@ export default function SoundfontProvider({
       const audioNode = instrument.play(midiNumber);
       // console.log(midiToColor[midiNumber]);
       // console.log(midiNumber);
-      setCurrentBackground([...currentBackground, midiToColor[midiNumber]]);
+      setCurrentBackground([...currentBackground, keyboardPalette[midiNumber]]);
       setActiveAudioNodes((prevState) => {
         return { ...prevState, [midiNumber]: audioNode };
       });
@@ -68,9 +68,7 @@ export default function SoundfontProvider({
       // console.log('currentBackground:', currentBackground);
       setCurrentBackground((prevArray) =>
         prevArray.filter((color) => {
-          // console.log('color', color);
-          return color !== midiToColor[midiNumber];
-          // console.log('midi', midiToColor[midiNumber]);
+          return color !== keyboardPalette[midiNumber];
         })
       );
       setActiveAudioNodes((prevState) => {
