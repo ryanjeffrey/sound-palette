@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-// import { instrument } from 'soundfont-player';
 import { InstrumentContext } from '../InstrumentContext';
-// instrument
+import './Select.css';
+
 function Select() {
   const { setInstrument, instrument } = useContext(InstrumentContext);
   console.log(instrument);
@@ -15,7 +15,7 @@ function Select() {
 
   //select.blur to deselect the dropdown
   return (
-    <div>
+    <div className="select-wrap">
       <select id="select" value={instrument} onChange={soundHandler}>
         <option value="accordion">accordion</option>
         <option value="acoustic_bass">acoustic bass</option>
