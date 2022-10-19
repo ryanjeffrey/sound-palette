@@ -79,12 +79,12 @@ function Plane1(props) {
     <mesh
       {...props}
       ref={Mesh}
-      receiveShadow rotation={[5, 0, 0]} position={[0, -3, 0]}
+      receiveShadow rotation={[4.7, 0, 0]} position={[0, -3, 0]}
       // onClick={() => setActive(!active)}
       // onPointerOver={() => setHover(true)}
       // onPointerOut={() => setHover(false)}
     >
-      <planeGeometry args={[70, 40, 40, 40]} />
+      <planeGeometry args={[70, 40, 25, 25]} />
       <meshLambertMaterial color={currentBackground[1]} wireframe={true} />
     </mesh>
   );
@@ -97,12 +97,12 @@ function Plane2(props) {
     <mesh
       {...props}
       ref={Mesh}
-      receiveShadow rotation={[4.8, 0, 0]} position={[0, 9, -10]}
+      receiveShadow rotation={[4.7, 0, 0]} position={[0, 3, 0]}
       // onClick={() => setActive(!active)}
       // onPointerOver={() => setHover(true)}
       // onPointerOut={() => setHover(false)}
     >
-      <planeGeometry args={[70, 40, 40, 40]} />
+      <planeGeometry args={[70, 40, 25, 25]} />
       <meshLambertMaterial color={currentBackground[1]} wireframe={true} />
     </mesh>
   );
