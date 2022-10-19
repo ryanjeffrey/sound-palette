@@ -121,7 +121,7 @@ function Plane2(props) {
       // onPointerOver={() => setHover(true)}
       // onPointerOut={() => setHover(false)}
     >
-      <planeGeometry args={[70, 40, 40, 40]} />
+      <planeGeometry args={[70, 40, 25, 25]} />
       <meshLambertMaterial color={currentBackground[1]} wireframe={true} />
     </mesh>
   );
