@@ -17,4 +17,11 @@
  
 }
 
+.color-div input {
+  width: 16.5px;
+  height: 19px;
+  border: none;
+  border-radius: 50%;
+}
+
 
