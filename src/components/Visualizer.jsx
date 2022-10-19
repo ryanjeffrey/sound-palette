@@ -1,11 +1,10 @@
 import React from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useControls } from 'leva';
-import {
-  TrackballControls
-} from '@react-three/drei';
 import { useContext } from 'react';
 import { ColorContext } from '../ColorContext';
+
+import './Visualizer.css';
 
 function RotatingTorus(props) {
   const Mesh = React.useRef();
@@ -61,9 +60,8 @@ export default function Visualizer() {
   // eslint-disable-next-line no-console
   console.log(color);
   return (
-    <div className="App">
+    <div className="visualizer">
       <Canvas>
-        <TrackballControls />
         <RotatingTorus />
         <RotatingIcosahedron />
         <ambientLight color={currentBackground[2]} />
