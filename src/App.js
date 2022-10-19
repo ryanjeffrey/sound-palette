@@ -6,6 +6,7 @@ import Header from './components/header/Header';
 import { PaletteKeyboard } from './components/piano/PaletteKeyboard';
 import About from './components/about/About';
 import Select from './components/Select';
+import Visualizer from './components/Visualizer';
 
 function App() {
   const { currentBackground, keyboardPalette, setKeyboardPalette } = useContext(ColorContext);
@@ -51,7 +52,7 @@ function App() {
       <Switch>
         <Route path="/about" component={About} />
         <Route path="/">
-          {/* icon can go above the keyboard */}
+          <Visualizer />
           <PaletteKeyboard />
           <Select />
         </Route>

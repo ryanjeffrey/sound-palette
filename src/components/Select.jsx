@@ -4,8 +4,6 @@ import './Select.css';
 
 function Select() {
   const { setInstrument, instrument } = useContext(InstrumentContext);
-  console.log(instrument);
-  //clickhandler to set the e.target.value
 
   const soundHandler = (e) => {
     setInstrument(e.target.value);
