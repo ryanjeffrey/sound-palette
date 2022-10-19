@@ -15,4 +15,5 @@
   height: 100vh;
   width: 100vw;
   transition: background-color 1s ease;
+  background-color: rgb(54, 52, 52);
 }
