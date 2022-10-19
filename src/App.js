@@ -7,15 +7,10 @@ import { PaletteKeyboard } from './components/piano/PaletteKeyboard';
 import About from './components/about/About';
 import Select from './components/Select';
 import Visualizer from './components/Visualizer';
+import ColorPicker from './components/ColorPicker';
 
 function App() {
-  const { currentBackground, keyboardPalette, setKeyboardPalette } = useContext(ColorContext);
-
-  // if (currentBackground.length === 1) {
-  //   const single = currentBackground;
-  // }
-  const colorKeyArray = Object.keys(keyboardPalette);
-
+  const { currentBackground, keyboardPalette } = useContext(ColorContext);
   return (
     <div
       className="App"
@@ -26,33 +21,11 @@ function App() {
       }
     >
       <Header />
-      <div className="color-div">
-        {colorKeyArray.map((midiNumber, index) => {
-          return <input key = {index} type = 'color' value={keyboardPalette[midiNumber]} onChange={(e) => {
-            function makeNewKeyboardPalette() {
-              let newKeyboardPalette = {};
-              for (let key in keyboardPalette) {
-                key === midiNumber ? newKeyboardPalette[key] = e.target.value : newKeyboardPalette[key] = keyboardPalette[key];
-              }
-              return newKeyboardPalette;
-            }
-            setKeyboardPalette(makeNewKeyboardPalette());
-
-          }
-          }    
-        // this color picker has a specific midiNumber
-        // the user has picked a new color e.target.value
-        // we want to build a new object to set as keyboardPalette
-        // it's the same as the old one, with current midiNumber set to color user picked
-
-          />;
-        
-        })}
-      </div>
       <Switch>
         <Route path="/about" component={About} />
         <Route path="/">
           <Visualizer />
+          <ColorPicker />
           <PaletteKeyboard />
           <Select />
         </Route>
