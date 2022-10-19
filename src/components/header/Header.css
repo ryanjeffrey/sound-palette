@@ -6,6 +6,7 @@ header {
     position: absolute;
     top: 0;
     text-transform: lowercase;
+    z-index: 1000;
 }
 
 header h1 {
