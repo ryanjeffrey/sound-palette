@@ -35,7 +35,7 @@ function RotatingTorus(props) {
       <meshPhysicalMaterial
         color={currentBackground[0]}
         roughness={0}
-        transparent={true}
+        // transparent={true}
         opacity={0.7}
         wireframe={wireframe}
       />
@@ -72,16 +72,54 @@ function RotatingIcosahedron(props) {
   );
 }
 
+function Plane1(props) {
+  const Mesh = React.useRef();
+  const { currentBackground } = useContext(ColorContext);
+  return (
+    <mesh
+      {...props}
+      ref={Mesh}
+      receiveShadow rotation={[5, 0, 0]} position={[0, -3, 0]}
+      // onClick={() => setActive(!active)}
+      // onPointerOver={() => setHover(true)}
+      // onPointerOut={() => setHover(false)}
+    >
+      <planeGeometry args={[70, 40, 40, 40]} />
+      <meshLambertMaterial color={currentBackground[1]} wireframe={true} />
+    </mesh>
+  );
+}
+
+function Plane2(props) {
+  const Mesh = React.useRef();
+  const { currentBackground } = useContext(ColorContext);
+  return (
+    <mesh
+      {...props}
+      ref={Mesh}
+      receiveShadow rotation={[4.8, 0, 0]} position={[0, 9, -10]}
+      // onClick={() => setActive(!active)}
+      // onPointerOver={() => setHover(true)}
+      // onPointerOut={() => setHover(false)}
+    >
+      <planeGeometry args={[70, 40, 40, 40]} />
+      <meshLambertMaterial color={currentBackground[1]} wireframe={true} />
+    </mesh>
+  );
+}
+
 export default function Visualizer() {
   // const { currentBackground } = useContext(ColorContext);
   const { bg } = useControls({ bg: { value: '#fff', label: 'ambientLightColor' } });
   return (
     <div className="visualizer">
       <Canvas>
+        <Plane1 />
         <RotatingTorus />
         <RotatingIcosahedron />
         <ambientLight color={bg} />
         <directionalLight />
+        <Plane2 />
       </Canvas>
     </div>
   );
