@@ -73,7 +73,7 @@ function RotatingIcosahedron(props) {
 }
 
 export default function Visualizer() {
-  const { currentBackground } = useContext(ColorContext);
+  // const { currentBackground } = useContext(ColorContext);
   const { bg } = useControls({ bg: { value: '#fff', label: 'ambientLightColor' } });
   return (
     <div className="visualizer">

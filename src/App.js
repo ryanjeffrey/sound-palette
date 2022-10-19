@@ -10,7 +10,7 @@ import Visualizer from './components/Visualizer';
 import ColorPicker from './components/ColorPicker';
 
 function App() {
-  const { currentBackground, keyboardPalette } = useContext(ColorContext);
+  const { currentBackground } = useContext(ColorContext);
   return (
     <div
       className="App"
