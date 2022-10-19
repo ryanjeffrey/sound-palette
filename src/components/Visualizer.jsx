@@ -7,6 +7,7 @@ import { ColorContext } from '../ColorContext';
 
 import './Visualizer.css';
 import { useTexture } from '@react-three/drei';
+import { DoubleSide } from 'three';
 
 function RotatingTorus(props) {
   const Mesh = React.useRef();
@@ -73,7 +74,7 @@ function RotatingIcosahedron(props) {
   );
 }
 
-function Plane1(props) {
+function BottomPlane(props) {
   const Mesh = React.useRef();
   const { currentBackground } = useContext(ColorContext);
 
@@ -81,7 +82,8 @@ function Plane1(props) {
   const waterSpec = useTexture('./images/Water_001_SPEC.jpg');
   const waterOcc = useTexture('./images/Water_001_OCC.jpg');
   const waterNorm = useTexture('./images/Water_001_NORM.jpg');
-
+  const waterColor = useTexture('./images/Water_001_COLOR.jpg');
+  
   return (
     <mesh
       {...props}
@@ -97,19 +99,27 @@ function Plane1(props) {
       <meshLambertMaterial
         color={currentBackground[1]}
         displacementMap={waterDisp}
-        displacementScale={2}
+        displacementScale={currentBackground.length}
+        specularMap={waterSpec}
         normalMap={waterNorm}
         aoMap={waterOcc}
-        specularMap={waterSpec}
+        side={DoubleSide}
+        map={waterColor}
         wireframe={true}
       />
     </mesh>
   );
 }
 
-function Plane2(props) {
+function TopPlane(props) {
   const Mesh = React.useRef();
   const { currentBackground } = useContext(ColorContext);
+
+  const waterDisp = useTexture('./images/Water_001_DISP.png');
+  const waterSpec = useTexture('./images/Water_001_SPEC.jpg');
+  const waterOcc = useTexture('./images/Water_001_OCC.jpg');
+  const waterNorm = useTexture('./images/Water_001_NORM.jpg');
+
   return (
     <mesh
       {...props}
@@ -122,7 +132,16 @@ function Plane2(props) {
       // onPointerOut={() => setHover(false)}
     >
       <planeGeometry args={[70, 40, 25, 25]} />
-      <meshLambertMaterial color={currentBackground[1]} wireframe={true} />
+      <meshLambertMaterial
+        color={currentBackground[1]}
+        displacementMap={waterDisp}
+        displacementScale={currentBackground.length}
+        specularMap={waterSpec}
+        normalMap={waterNorm}
+        aoMap={waterOcc}
+        side={DoubleSide}
+        wireframe={true}
+      />
     </mesh>
   );
 }
@@ -133,12 +152,12 @@ export default function Visualizer() {
   return (
     <div className="visualizer">
       <Canvas>
-        <Plane1 />
+        <BottomPlane />
         <RotatingTorus />
         <RotatingIcosahedron />
         <ambientLight color={bg} />
         <directionalLight />
-        <Plane2 />
+        <TopPlane />
       </Canvas>
     </div>
   );
