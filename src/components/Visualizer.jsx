@@ -1,23 +1,15 @@
-import React, { useState } from 'react';
-import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.module.js';
+import React from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import SoundfontProvider from './SoundfontProvider';
-import DatGui from 'react-dat-gui';
+import { useControls } from 'leva';
 import {
-  ArcballControls,
-  FirstPersonControls,
-  FlyControls,
-  OrbitControls,
-  PointerLockControls,
-  TrackballControls,
-  TransformControls,
+  TrackballControls
 } from '@react-three/drei';
-import { HemisphereLight } from 'three';
+import { useContext } from 'react';
+import { ColorContext } from '../ColorContext';
 
 function RotatingTorus(props) {
   const Mesh = React.useRef();
-  const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
+  const { currentBackground } = useContext(ColorContext);
 
   useFrame(({ clock }) => {
     const a = clock.getElapsedTime();
@@ -29,12 +21,9 @@ function RotatingTorus(props) {
     <mesh
       {...props}
       ref={Mesh}
-      scale={active ? 2.5 : 2}
-      onClick={() => setActive(!active)}
-      onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}
+      scale={2}
     >
-      {hovered ? <meshPhysicalMaterial color={active ? 'black' : 'red'} /> : <meshNormalMaterial />}
+      <meshPhysicalMaterial color={currentBackground[0]} />
       <torusGeometry />
     </mesh>
   );
@@ -42,8 +31,7 @@ function RotatingTorus(props) {
 
 function RotatingIcosahedron(props) {
   const Mesh = React.useRef();
-  const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
+  const { currentBackground } = useContext(ColorContext);
 
   useFrame(({ clock }) => {
     const a = clock.getElapsedTime();
@@ -55,29 +43,30 @@ function RotatingIcosahedron(props) {
     <mesh
       {...props}
       ref={Mesh}
-      scale={active ? 0.75 : 1}
-      onClick={() => setActive(!active)}
-      onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}
+      scale={1}
+      // onClick={() => setActive(!active)}
+      // onPointerOver={() => setHover(true)}
+      // onPointerOut={() => setHover(false)}
     >
       <icosahedronGeometry />
-      {hovered ? (
-        <meshToonMaterial color={active ? 'green' : 'orangered'} />
-      ) : (
-        <meshLambertMaterial />
-      )}
+      <meshToonMaterial color={currentBackground[1]} />
     </mesh>
   );
 }
 
 export default function Visualizer() {
+  const { currentBackground } = useContext(ColorContext);
+  const { color } = useControls('meshPhysicalMaterial', { color: '#000' });
+
+  // eslint-disable-next-line no-console
+  console.log(color);
   return (
     <div className="App">
       <Canvas>
         <TrackballControls />
         <RotatingTorus />
         <RotatingIcosahedron />
-        <ambientLight />
+        <ambientLight color={currentBackground[2]} />
         <directionalLight />
       </Canvas>
     </div>

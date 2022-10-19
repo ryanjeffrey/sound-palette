@@ -50,10 +50,9 @@ function App() {
         })}
       </div>
       <Switch>
-        <Route path="/visualizer" component={Visualizer} />
         <Route path="/about" component={About} />
         <Route path="/">
-          {/* icon can go above the keyboard */}
+          <Visualizer />
           <PaletteKeyboard />
           <Select />
         </Route>
