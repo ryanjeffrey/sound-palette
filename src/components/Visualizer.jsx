@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unknown-property */
 import React from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useControls } from 'leva';
+import { folder, useControls, Leva } from 'leva';
 import { useContext } from 'react';
 import { ColorContext } from '../ColorContext';
 
 import './Visualizer.css';
+import { useState } from 'react';
 
 function RotatingTorus(props) {
   const Mesh = React.useRef();
@@ -28,7 +29,7 @@ function RotatingTorus(props) {
     torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'torusSize' },
   });
 
-  const { wireframe } = useControls({ wireframe: false, });
+  const { wireframe } = useControls({ wireframe: false });
 
   return (
     <mesh {...props} ref={Mesh} scale={torusSize}>
@@ -54,26 +55,21 @@ function RotatingIcosahedron(props) {
     Mesh.current.rotation.z = a * Math.PI;
   });
 
+  const [active, setActive] = useState(false);
+
   const { icosahedronSize } = useControls({
     icosahedronSize: { value: '1', min: '0.5', max: '3', step: '0.25', label: 'icosahedronSize' },
   });
+
   return (
-    <mesh
-      {...props}
-      ref={Mesh}
-      scale={icosahedronSize}
-      // onClick={() => setActive(!active)}
-      // onPointerOver={() => setHover(true)}
-      // onPointerOut={() => setHover(false)}
-    >
-      <icosahedronGeometry />
+    <mesh {...props} ref={Mesh} scale={icosahedronSize} onClick={() => setActive(!active)}>
+      {active ? <boxGeometry /> : <icosahedronGeometry />}
       <meshPhysicalMaterial color={currentBackground[1]} roughness={0.1} />
     </mesh>
   );
 }
 
 export default function Visualizer() {
-  // const { currentBackground } = useContext(ColorContext);
   const { bg } = useControls({ bg: { value: '#fff', label: 'ambientLightColor' } });
   return (
     <div className="visualizer">
