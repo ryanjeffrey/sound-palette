@@ -1,0 +1,9 @@
+.octave-button-container {
+  display: flex;
+  margin: 10px;
+  justify-content: space-around;
+}
+
+.octave-button {
+  margin: 5px;
+}
