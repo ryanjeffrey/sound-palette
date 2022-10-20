@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import { ColorContext } from './ColorContext';
@@ -9,7 +9,7 @@ import Select from './components/Select';
 import Visualizer from './components/Visualizer';
 import ColorPicker from './components/ColorPicker';
 import Octaves from './components/octaves/Octaves';
-import Joyride from 'react-joyride';
+import Joyride, { STATUS } from 'react-joyride';
 
 function App() {
   const { currentBackground } = useContext(ColorContext);
@@ -35,6 +35,14 @@ function App() {
       content: 'Use this menu to control rotation, speed, size, and geometry of the 3D objects',
     },
   ];
+  const [run, setRun] = useState(true);
+  const handleJoyrideCallback = (data) => {
+    const { status } = data;
+    const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
+    if (finishedStatuses.includes(status)) {
+      setRun(false);
+    }
+  };
   return (
     <div
       className="App"
@@ -45,10 +53,17 @@ function App() {
       }
     >
       <Header />
-      <Joyride steps={steps} continuous={true} showSkipButton={true} showProgress={true} />
       <Switch>
         <Route path="/about" component={About} />
         <Route path="/">
+          <Joyride
+            callback={handleJoyrideCallback}
+            run={run}
+            steps={steps}
+            continuous={true}
+            showSkipButton={true}
+            showProgress={true}
+          />
           <Visualizer />
           <ColorPicker />
           <PaletteKeyboard />
