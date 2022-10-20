@@ -40,9 +40,9 @@ export default function Octaves() {
     };
   }, [hotkey]);
   return (
-    <div className='octave-button-container'>
-
-      <button className='octave-button'
+    <div className="octave-button-container">
+      <button
+        className="octave-button"
         onClick={() => {
           if (note > 1) {
             setNote(note - 1);
@@ -54,13 +54,16 @@ export default function Octaves() {
           }
         }}
       >
-            Octave Down (Press z)
+        Octave 🔽 (Press z)
       </button>
-      <div className='octave-display-container'>
+      <div className="octave-display-container">
         <div>Range</div>
-        <div>C{note}-F{Number(note) + 1}</div>
+        <div>
+          C{note}-F{Number(note) + 1}
+        </div>
       </div>
-      <button className='octave-button'
+      <button
+        className="octave-button"
         onClick={() => {
           if (note < 6) {
             setNote(note + 1);
@@ -72,7 +75,7 @@ export default function Octaves() {
           }
         }}
       >
-            Octave Up (Press /)
+        Octave 🔼 (Press /)
       </button>
     </div>
   );

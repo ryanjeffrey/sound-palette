@@ -1,8 +1,8 @@
 .select-wrap {
-  margin: 10px;
+  margin-bottom: 20px;
 }
 
 #select {
-  font-size: 1.1rem;
+  font-size: .9rem;
   border-radius: 0 0 5px 5px;
 }

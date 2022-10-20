@@ -2,10 +2,18 @@
   display: flex;
   margin: 10px;
   justify-content: space-around;
+  font-size: .5em;
 }
 
 .octave-button {
   margin: 5px;
+  font-size: .5em;
+  background-color: rgba(216, 216, 216, 0.203);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 2px;
+  color: white;
 }
 
 .octave-display-container {

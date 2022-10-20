@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: rgb(54, 52, 52);
+}
+
 .App {
   display: flex;
   flex-direction: column;
