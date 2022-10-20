@@ -56,7 +56,10 @@ export default function Octaves() {
       >
             Octave Down (Press z)
       </button>
-
+      <div className='octave-display-container'>
+        <div>Range</div>
+        <div>C{note}-F{Number(note) + 1}</div>
+      </div>
       <button className='octave-button'
         onClick={() => {
           if (note < 6) {
