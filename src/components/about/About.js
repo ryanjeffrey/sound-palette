@@ -40,14 +40,18 @@ export default function About() {
 
   return (
     <div className="about">
-      {/* <h1>Meet the Developers</h1> */}
       <div
         onMouseEnter={changeBackgroundNathan}
         onMouseLeave={revertBackground} 
         className="nathan">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/nathan.jfif`} />
         <h2>Nathan Burgess</h2>
-        <p>Full-Stack Software Developer living in Oregon</p>
+        <p>Hi, my name is Nathan, an artist and former math teacher turned software engineer
+          based in Portland, OR. While I did study how to play the piano for ten years as a child,
+          I sadly remember nothing about how to play. I&apos;m a creative problem-solver who is always learning new 
+          skills, and have a history of experience in project management and running 
+          my own businesses.</p>
+        <span><strong>Favorite Instrument:</strong> Human Voice</span>
         <div>
           <a href="https://github.com/nathburg">
             <img className='logo' src={`${process.env.PUBLIC_URL}/images/githublogo.png`}></img>
@@ -64,7 +68,14 @@ export default function About() {
         className="eddie">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/eddie.png`} />
         <h2>Eddie Kuo</h2>
-        <p>Full-Stack Software Developer living in Texas</p>
+        <p>Hi! My name is Eddie Kuo and I am a Full Stack Software 
+          Engineer based in Austin, Texas. From managing hotels to 
+          becoming an amateur bodybuilder and now software engineer, 
+          music was the one thing that helped me through all my 
+          professional career transitions. Here is an app that displays 
+          all of our creativity as well as in hopes of helping you unlock 
+          your own!</p>
+        <span><strong>Favorite Instrument:</strong> Piano</span>
         <div>
           <a href="https://github.com/Eddie-Kuo">
             <img className='logo' src={`${process.env.PUBLIC_URL}/images/githublogo.png`}></img>
@@ -81,7 +92,14 @@ export default function About() {
         className="jessica">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/jessica.jpg`} />
         <h2>Jessica Martin</h2>
-        <p>Full-Stack Software Developer living in Oregon</p>
+        <p>Hey Everyone! I&apos;m Jessica Martin, a Full-Stack 
+          Software Engineer based out of Corvallis, OR. Working with
+          this amazing team of developers to bring this creative app to 
+          life was a truly enjoyable experience. I was excited to get the
+          opportunity to implement react three fiber in this project. While I 
+          grew up playing the Flute, I recently started learning the accordion.
+        </p>
+        <span><strong>Favorite Instrument:</strong> Accordion</span>
         <div>
           <a href="https://github.com/Jmart5564">
             <img className='logo' src={`${process.env.PUBLIC_URL}/images/githublogo.png`}></img>
@@ -98,7 +116,14 @@ export default function About() {
         className="ryanp">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/ryanparker.png`} />
         <h2>Ryan Parker</h2>
-        <p>Full-Stack Software Developer living in Oregon</p>
+        <p>I&apos;m Ryan Parker, a creative developer based in Vancouver, 
+          WA with dreams of building the metaverse. Creating this app 
+          with such a skilled team of developers has been a fantastic 
+          experience, and the opportunity to build a feature-rich and 
+          visually appealing UI using 3D components has been incredibly 
+          instructive. I love the sound of a sitar, but I&apos;m also 
+          unreasonably fond of bagpipes.</p>
+        <span><strong>Favorite Instrument:</strong> Sitar</span>
         <div>
           <a href="https://github.com/ryan-j-parker">
             <img className='logo' src={`${process.env.PUBLIC_URL}/images/githublogo.png`}></img>
@@ -115,7 +140,13 @@ export default function About() {
         className="ryans">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/ryansmith.jfif`} />
         <h2>Ryan Smith</h2>
-        <p>Full-Stack Software Developer living in Illinois</p>
+        <p>Hi my name is Ryan Smith and I am a Full Stack Software Engineer 
+          based in Chicago. As a musician and developer, I love to create apps 
+          that make music fun and easy. This app was so much fun to work on 
+          because of the incredible team of devs that all used their 
+          creativity and technical skills to make something amazing! 
+          My favorite instrument is the Hammond B3 Organ.</p>
+        <span><strong>Favorite Instrument:</strong> B3 Organ</span>
         <div>
           <a href="https://github.com/ryanjeffrey">
             <img className='logo' src={`${process.env.PUBLIC_URL}/images/githublogo.png`}></img>
