@@ -57,13 +57,15 @@ function RotatingIcosahedron(props) {
 
   const [active, setActive] = useState(false);
 
+  const { geometry } = useControls({ geometry: false });
+
   const { icosahedronSize } = useControls({
     icosahedronSize: { value: '1', min: '0.5', max: '3', step: '0.25', label: 'icosahedronSize' },
   });
 
   return (
     <mesh {...props} ref={Mesh} scale={icosahedronSize} onClick={() => setActive(!active)}>
-      {active ? <boxGeometry /> : <icosahedronGeometry />}
+      {geometry ? <boxGeometry /> : <icosahedronGeometry />}
       <meshPhysicalMaterial color={currentBackground[1]} roughness={0.1} />
     </mesh>
   );
