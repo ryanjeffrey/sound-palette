@@ -12,12 +12,13 @@ function RotatingTorus(props) {
   const Mesh = React.useRef();
   const { currentBackground } = useContext(ColorContext);
 
-  const { speedX, speedY, speedZ, torusSize, wireframe } = useControls({
+  const { speedX, speedY, speedZ, torusSize, material, wireframe } = useControls({
     torus: folder({
       speedX: { value: '1.1', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedX' },
       speedY: { value: '1.2', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedY' },
       speedZ: { value: '1.4', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedZ' },
       torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'torusSize' },
+      material: false,
       wireframe: false,
     }),
   });
@@ -29,21 +30,27 @@ function RotatingTorus(props) {
     Mesh.current.rotation.y = a * speedZ;
   });
 
-  // //   const { torusSize } = useControls({
-  //     torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'torusSize' },
-  //   });
-
-  //   const { wireframe } = useControls({ wireframe: false });
-
   return (
     <mesh {...props} ref={Mesh} scale={torusSize}>
-      <meshPhysicalMaterial
-        color={currentBackground[0]}
-        roughness={0}
-        transparent={true}
-        opacity={0.7}
-        wireframe={wireframe}
-      />
+      {material ? (
+        <meshPhysicalMaterial
+          color={currentBackground[0]}
+          transparent={false}
+          roughness={0.5}
+          clearcoat={0.5}
+          metalness={0.5}
+          shininess={150}
+          wireframe={wireframe}
+        />
+      ) : (
+        <meshPhysicalMaterial
+          color={currentBackground[0]}
+          roughness={0}
+          transparent={true}
+          opacity={0.7}
+          wireframe={wireframe}
+        />
+      )}
       <torusGeometry args={[1, 0.2, 48, 120]} />
     </mesh>
   );
@@ -61,38 +68,52 @@ function RotatingIcosahedron(props) {
 
   const [active, setActive] = useState(false);
 
-  //   const { geometry } = useControls({ geometry: false });
-
-  const { icosahedronSize, geometry, material } = useControls({
+  const { icosahedronSize, geometry, material, wireframe } = useControls({
     icosahedron: folder({
       icosahedronSize: { value: '1', min: '0.5', max: '3', step: '0.25', label: 'icosahedronSize' },
       geometry: false,
       material: false,
+      wireframe: false,
     }),
   });
-
-  //   const { material } = useControls({ material: false });
 
   return (
     <mesh {...props} ref={Mesh} scale={icosahedronSize} onClick={() => setActive(!active)}>
       {geometry ? <boxGeometry /> : <icosahedronGeometry />}
       {material ? (
-        <meshToonMaterial color={currentBackground[1]} />
+        <meshPhysicalMaterial
+          color={currentBackground[1]}
+          roughness={0.5}
+          clearcoat={0.5}
+          metalness={0.5}
+          shininess={150}
+          wireframe={wireframe}
+        />
       ) : (
-        <meshPhysicalMaterial color={currentBackground[1]} roughness={0.1} />
+        <meshPhongMaterial
+          color={currentBackground[1]}
+          shininess={150}
+          wireframe={wireframe}
+          roughness={0.05}
+        />
       )}
     </mesh>
   );
 }
 
 export default function Visualizer() {
-  const { bg } = useControls({ bg: { value: '#fff', label: 'ambientLightColor' } });
+  const { bg, shadows } = useControls({
+    atmosphere: folder({
+      bg: { value: '#fff', label: 'ambientLightColor' },
+      shadows: { value: false, label: 'shadows' },
+    }),
+  });
   return (
     <div className="visualizer">
       <Canvas>
         <RotatingTorus />
         <RotatingIcosahedron />
-        <ambientLight color={bg} />
+        {shadows ? false : <ambientLight color={bg} />}
         <directionalLight />
       </Canvas>
     </div>
