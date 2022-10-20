@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import React from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { folder, useControls, Leva } from 'leva';
+import { folder, useControls } from 'leva';
 import { useContext } from 'react';
 import { ColorContext } from '../ColorContext';
 
@@ -68,18 +68,54 @@ function RotatingIcosahedron(props) {
 
   const [active, setActive] = useState(false);
 
-  const { icosahedronSize, geometry, material, wireframe } = useControls({
-    icosahedron: folder({
+  const { icosahedronSize, material, wireframe, shape } = useControls({
+    solid: folder({
+      shape: {
+        options: {
+          tetrahedron: 'tetrahedron',
+          cube: 'cube',
+          octahedron: 'octahedron',
+          dodecahedron: 'dodecahedron',
+          icosahedron: 'icosahedron',
+        },
+      },
       icosahedronSize: { value: '1', min: '0.5', max: '3', step: '0.25', label: 'icosahedronSize' },
-      geometry: false,
       material: false,
       wireframe: false,
     }),
   });
 
+  // tetrahedron, cube, octahedron, dodecahedron, icosahedron;
+
+  //   const solid = () => {
+  let solid = <boxGeometry />;
+  switch (shape) {
+    case 'tetrahedron':
+      solid = <tetrahedronGeometry />;
+      break;
+    case 'cube':
+      solid = <boxGeometry />;
+      break;
+    case 'octahedron':
+      solid = <octahedronGeometry />;
+      break;
+    case 'dodecahedron':
+      solid = <dodecahedronGeometry />;
+      break;
+    case 'icosahedron':
+      solid = <icosahedronGeometry />;
+      break;
+  }
+
+  console.log('solid', solid);
+  console.log('dodecahedron geometry', <dodecahedronGeometry />);
+  //   };
+
   return (
     <mesh {...props} ref={Mesh} scale={icosahedronSize} onClick={() => setActive(!active)}>
-      {geometry ? <boxGeometry /> : <icosahedronGeometry />}
+      {/* {geometry ? <boxGeometry /> : <icosahedronGeometry />} */}
+
+      {solid}
       {material ? (
         <meshPhysicalMaterial
           color={currentBackground[1]}
