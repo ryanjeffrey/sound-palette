@@ -8,11 +8,11 @@ import About from './components/about/About';
 import Select from './components/Select';
 import Visualizer from './components/Visualizer';
 import ColorPicker from './components/ColorPicker';
-import { InstrumentContext } from './InstrumentContext';
+import Octaves from './components/octaves/Octaves';
 
 function App() {
   const { currentBackground } = useContext(ColorContext);
-  const { setNote, note } = useContext(InstrumentContext);
+
   return (
     <div
       className="App"
@@ -29,24 +29,7 @@ function App() {
           <Visualizer />
           <ColorPicker />
           <PaletteKeyboard />
-          <button
-            onClick={() => {
-              if (note < 8) {
-                setNote(note + 1);
-              }
-            }}
-          >
-            +
-          </button>
-          <button
-            onClick={() => {
-              if (note > 1) {
-                setNote(note - 1);
-              }
-            }}
-          >
-            -
-          </button>
+          <Octaves />
           <Select />
         </Route>
       </Switch>

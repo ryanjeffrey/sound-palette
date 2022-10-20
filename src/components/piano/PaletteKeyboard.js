@@ -11,11 +11,6 @@ import './PaletteKeyboard.css';
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
 
-// const range = {
-//   firstNote: 'c3',
-//   lastNote: 'f4',
-// };
-
 export function PaletteKeyboard() {
   const { instrument, note } = useContext(InstrumentContext);
   const noteRange = {
