@@ -14,7 +14,7 @@ function RotatingTorus(props) {
   const Mesh = React.useRef();
   const { currentBackground } = useContext(ColorContext);
 
-  const { speedX, speedY, speedZ, torusSize, material, wireframe } = useControls({
+  const { speedX, speedY, speedZ, torusSize, material, wireframe, opacity } = useControls({
     torus: folder({
       speedX: { value: '1.1', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedX' },
       speedY: { value: '1.2', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedY' },
@@ -22,6 +22,7 @@ function RotatingTorus(props) {
       torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'torusSize' },
       material: false,
       wireframe: false,
+      opacity: { value: '0.7', min: '0.05', max: '1', step: '0.05', label: 'opacity' },
     }),
   });
 
@@ -42,6 +43,7 @@ function RotatingTorus(props) {
           clearcoat={0.5}
           metalness={0.5}
           shininess={150}
+          opacity={opacity}
           wireframe={wireframe}
         />
       ) : (
@@ -49,7 +51,7 @@ function RotatingTorus(props) {
           color={currentBackground[0]}
           roughness={0}
           transparent={true}
-          opacity={0.7}
+          opacity={opacity}
           wireframe={wireframe}
         />
       )}
@@ -144,10 +146,14 @@ function BottomPlane(props) {
   const { currentBackground } = useContext(ColorContext);
 
   const waterDisp = useTexture('./images/Water_001_DISP.png');
-  const waterSpec = useTexture('./images/Water_001_SPEC.jpg');
-  const waterOcc = useTexture('./images/Water_001_OCC.jpg');
-  const waterNorm = useTexture('./images/Water_001_NORM.jpg');
+  //   const waterSpec = useTexture('./images/Water_001_SPEC.jpg');
+  //   const waterOcc = useTexture('./images/Water_001_OCC.jpg');
+  //   const waterNorm = useTexture('./images/Water_001_NORM.jpg');
   const waterColor = useTexture('./images/Water_001_COLOR.jpg');
+
+  const { toggleBottomPlane } = useControls({
+    toggleBottomPlane: false,
+  });
 
   return (
     <mesh
@@ -160,14 +166,14 @@ function BottomPlane(props) {
       // onPointerOver={() => setHover(true)}
       // onPointerOut={() => setHover(false)}
     >
-      <planeGeometry args={[70, 40, 40, 40]} />
+      {toggleBottomPlane ? true : <planeGeometry args={[70, 40, 40, 40]} />}
       <meshLambertMaterial
         color={currentBackground[1]}
         displacementMap={waterDisp}
         displacementScale={currentBackground.length}
-        specularMap={waterSpec}
-        normalMap={waterNorm}
-        aoMap={waterOcc}
+        // specularMap={waterSpec}
+        // normalMap={waterNorm}
+        // aoMap={waterOcc}
         side={DoubleSide}
         map={waterColor}
         wireframe={true}
@@ -185,6 +191,10 @@ function TopPlane(props) {
   const waterOcc = useTexture('./images/Water_001_OCC.jpg');
   const waterNorm = useTexture('./images/Water_001_NORM.jpg');
 
+  const { toggleTopPlane } = useControls({
+    toggleTopPlane: false,
+  });
+
   return (
     <mesh
       {...props}
@@ -196,7 +206,7 @@ function TopPlane(props) {
       // onPointerOver={() => setHover(true)}
       // onPointerOut={() => setHover(false)}
     >
-      <planeGeometry args={[70, 40, 25, 25]} />
+      {toggleTopPlane ? true : <planeGeometry args={[70, 40, 25, 25]} />}
       <meshLambertMaterial
         color={currentBackground[1]}
         displacementMap={waterDisp}
