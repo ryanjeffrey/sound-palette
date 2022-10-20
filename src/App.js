@@ -9,10 +9,32 @@ import Select from './components/Select';
 import Visualizer from './components/Visualizer';
 import ColorPicker from './components/ColorPicker';
 import Octaves from './components/octaves/Octaves';
+import Joyride from 'react-joyride';
 
 function App() {
   const { currentBackground } = useContext(ColorContext);
-
+  const steps = [
+    {
+      target: '.color-div',
+      content: 'Here you can choose a different color for each piano key.',
+    },
+    {
+      target: '.piano-wrapper',
+      content: 'Use your QWERTY keyboard to play notes on the virtual piano.',
+    },
+    {
+      target: '.octave-button-container',
+      content: 'Use these buttons to set the note range for the keyboard.',
+    },
+    {
+      target: '.select-wrap',
+      content: 'Use this dropdown menu to select an instrument sound.',
+    },
+    {
+      target: '.leva-c-hBtFDW',
+      content: 'Use this menu to control rotation, speed, size, and geometry of the 3D objects',
+    },
+  ];
   return (
     <div
       className="App"
@@ -23,6 +45,7 @@ function App() {
       }
     >
       <Header />
+      <Joyride steps={steps} continuous={true} showSkipButton={true} showProgress={true} />
       <Switch>
         <Route path="/about" component={About} />
         <Route path="/">
