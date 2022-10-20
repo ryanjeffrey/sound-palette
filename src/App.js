@@ -30,6 +30,10 @@ function App() {
       target: '.select-wrap',
       content: 'Use this dropdown menu to select an instrument sound.',
     },
+    {
+      target: '.leva-c-hBtFDW',
+      content: 'Use this menu to control rotation, speed, size, and geometry of the 3D objects',
+    },
   ];
   return (
     <div
