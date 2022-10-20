@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import { ColorContext } from './ColorContext';
@@ -13,6 +13,30 @@ import { InstrumentContext } from './InstrumentContext';
 function App() {
   const { currentBackground } = useContext(ColorContext);
   const { setNote, note } = useContext(InstrumentContext);
+
+  const hotkey = useCallback(
+    (e) => {
+      if (e.key === 'z') {
+        if (note > 1) {
+          setNote((prevNote) => prevNote - 1);
+        }
+      }
+      if (e.key === 'x') {
+        if (note < 8) {
+          setNote((prevNote) => prevNote + 1);
+        }
+      }
+    },
+    [note, setNote]
+  );
+
+  useEffect(() => {
+    window.addEventListener('keydown', hotkey);
+    return () => {
+      window.removeEventListener('keydown', hotkey);
+    };
+  }, [hotkey]);
+
   return (
     <div
       className="App"
@@ -36,7 +60,7 @@ function App() {
               }
             }}
           >
-            +
+            Octave Up
           </button>
           <button
             onClick={() => {
@@ -45,7 +69,7 @@ function App() {
               }
             }}
           >
-            -
+            Octave Down
           </button>
           <Select />
         </Route>
