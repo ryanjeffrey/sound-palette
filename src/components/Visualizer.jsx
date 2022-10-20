@@ -6,6 +6,8 @@ import { useContext } from 'react';
 import { ColorContext } from '../ColorContext';
 
 import './Visualizer.css';
+import { useTexture } from '@react-three/drei';
+import { DoubleSide } from 'three';
 
 function RotatingTorus(props) {
   const Mesh = React.useRef();
@@ -28,7 +30,7 @@ function RotatingTorus(props) {
     torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'torusSize' },
   });
 
-  const { wireframe } = useControls({ wireframe: false, });
+  const { wireframe } = useControls({ wireframe: false });
 
   return (
     <mesh {...props} ref={Mesh} scale={torusSize}>
@@ -72,38 +74,74 @@ function RotatingIcosahedron(props) {
   );
 }
 
-function Plane1(props) {
+function BottomPlane(props) {
   const Mesh = React.useRef();
   const { currentBackground } = useContext(ColorContext);
+
+  const waterDisp = useTexture('./images/Water_001_DISP.png');
+  const waterSpec = useTexture('./images/Water_001_SPEC.jpg');
+  const waterOcc = useTexture('./images/Water_001_OCC.jpg');
+  const waterNorm = useTexture('./images/Water_001_NORM.jpg');
+  const waterColor = useTexture('./images/Water_001_COLOR.jpg');
+  
   return (
     <mesh
       {...props}
       ref={Mesh}
-      receiveShadow rotation={[4.7, 0, 0]} position={[0, -3, 0]}
+      receiveShadow
+      rotation={[4.7, 0, 0]}
+      position={[0, -4, 0]}
       // onClick={() => setActive(!active)}
       // onPointerOver={() => setHover(true)}
       // onPointerOut={() => setHover(false)}
     >
-      <planeGeometry args={[70, 40, 25, 25]} />
-      <meshLambertMaterial color={currentBackground[1]} wireframe={true} />
+      <planeGeometry args={[70, 40, 40, 40]} />
+      <meshLambertMaterial
+        color={currentBackground[1]}
+        displacementMap={waterDisp}
+        displacementScale={currentBackground.length}
+        specularMap={waterSpec}
+        normalMap={waterNorm}
+        aoMap={waterOcc}
+        side={DoubleSide}
+        map={waterColor}
+        wireframe={true}
+      />
     </mesh>
   );
 }
 
-function Plane2(props) {
+function TopPlane(props) {
   const Mesh = React.useRef();
   const { currentBackground } = useContext(ColorContext);
+
+  const waterDisp = useTexture('./images/Water_001_DISP.png');
+  const waterSpec = useTexture('./images/Water_001_SPEC.jpg');
+  const waterOcc = useTexture('./images/Water_001_OCC.jpg');
+  const waterNorm = useTexture('./images/Water_001_NORM.jpg');
+
   return (
     <mesh
       {...props}
       ref={Mesh}
-      receiveShadow rotation={[4.7, 0, 0]} position={[0, 3, 0]}
+      receiveShadow
+      rotation={[4.7, 0, 0]}
+      position={[0, 4, 0]}
       // onClick={() => setActive(!active)}
       // onPointerOver={() => setHover(true)}
       // onPointerOut={() => setHover(false)}
     >
       <planeGeometry args={[70, 40, 25, 25]} />
-      <meshLambertMaterial color={currentBackground[1]} wireframe={true} />
+      <meshLambertMaterial
+        color={currentBackground[1]}
+        displacementMap={waterDisp}
+        displacementScale={currentBackground.length}
+        specularMap={waterSpec}
+        normalMap={waterNorm}
+        aoMap={waterOcc}
+        side={DoubleSide}
+        wireframe={true}
+      />
     </mesh>
   );
 }
@@ -114,12 +152,12 @@ export default function Visualizer() {
   return (
     <div className="visualizer">
       <Canvas>
-        <Plane1 />
+        <BottomPlane />
         <RotatingTorus />
         <RotatingIcosahedron />
         <ambientLight color={bg} />
         <directionalLight />
-        <Plane2 />
+        <TopPlane />
       </Canvas>
     </div>
   );
