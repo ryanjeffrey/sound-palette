@@ -2,7 +2,6 @@
 // for more documentation on prop options.
 import React, { useContext, useEffect, useState } from 'react';
 import Soundfont from 'soundfont-player';
-// import { midiToColor } from '../color-data';
 import { Piano } from 'react-piano';
 import { ColorContext } from '../ColorContext';
 
@@ -18,11 +17,7 @@ export default function SoundfontProvider({
   const { currentBackground, setCurrentBackground, keyboardPalette } = useContext(ColorContext);
   const [activeAudioNodes, setActiveAudioNodes] = useState({});
   const [instrument, setInstrument] = useState(null);
-  // format: 'mp3',
-  //     soundfont: 'MusyngKite',
-  //     instrumentName: 'acoustic_grand_piano',
   useEffect(() => {
-    // Re-trigger loading state
     setInstrument(null);
     Soundfont.instrument(audioContext, instrumentName, {
       format: format,
@@ -38,8 +33,6 @@ export default function SoundfontProvider({
   const playNote = (midiNumber) => {
     audioContext.resume().then(() => {
       const audioNode = instrument.play(midiNumber);
-      // console.log(midiToColor[midiNumber]);
-      // console.log(midiNumber);
       setCurrentBackground([...currentBackground, keyboardPalette[midiNumber]]);
       setActiveAudioNodes((prevState) => {
         return { ...prevState, [midiNumber]: audioNode };

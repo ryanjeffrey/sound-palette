@@ -8,7 +8,9 @@ const ColorProvider = ({ children }) => {
   const [keyboardPalette, setKeyboardPalette] = useState(midiToColor);
 
   return (
-    <ColorContext.Provider value={{ currentBackground, setCurrentBackground, keyboardPalette, setKeyboardPalette }}>
+    <ColorContext.Provider
+      value={{ currentBackground, setCurrentBackground, keyboardPalette, setKeyboardPalette }}
+    >
       {children}
     </ColorContext.Provider>
   );

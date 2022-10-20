@@ -8,9 +8,11 @@ import About from './components/about/About';
 import Select from './components/Select';
 import Visualizer from './components/Visualizer';
 import ColorPicker from './components/ColorPicker';
+import Octaves from './components/octaves/Octaves';
 
 function App() {
   const { currentBackground } = useContext(ColorContext);
+
   return (
     <div
       className="App"
@@ -27,6 +29,7 @@ function App() {
           <Visualizer />
           <ColorPicker />
           <PaletteKeyboard />
+          <Octaves />
           <Select />
         </Route>
       </Switch>
