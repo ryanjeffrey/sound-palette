@@ -89,8 +89,8 @@ function BottomPlane(props) {
       {...props}
       ref={Mesh}
       receiveShadow
-      rotation={[5, 0, 0]}
-      position={[0, -3, 0]}
+      rotation={[4.7, 0, 0]}
+      position={[0, -4, 0]}
       // onClick={() => setActive(!active)}
       // onPointerOver={() => setHover(true)}
       // onPointerOut={() => setHover(false)}
@@ -125,8 +125,8 @@ function TopPlane(props) {
       {...props}
       ref={Mesh}
       receiveShadow
-      rotation={[4.8, 0, 0]}
-      position={[0, 9, -10]}
+      rotation={[4.7, 0, 0]}
+      position={[0, 4, 0]}
       // onClick={() => setActive(!active)}
       // onPointerOver={() => setHover(true)}
       // onPointerOut={() => setHover(false)}
