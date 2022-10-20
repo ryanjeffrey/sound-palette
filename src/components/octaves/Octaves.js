@@ -19,7 +19,7 @@ export default function Octaves() {
           setKeyboardPalette(newKeyboardPalette);
         }
       }
-      if (e.key === 'x') {
+      if (e.key === '/') {
         if (note < 6) {
           setNote((prevNote) => prevNote + 1);
           let newKeyboardPalette = {};
@@ -69,7 +69,7 @@ export default function Octaves() {
           }
         }}
       >
-            Octave Up (Press x)
+            Octave Up (Press /)
       </button>
     </div>
   );
