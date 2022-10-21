@@ -14,6 +14,7 @@
   cursor: pointer;
   padding: 5px;
   color: white;
+  transition: background-color 0.3s ease;
 }
 .octave-button:hover {
  background-color:rgba(248, 248, 248, 0.376);
