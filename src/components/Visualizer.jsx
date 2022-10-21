@@ -22,7 +22,7 @@ function RotatingTorus(props) {
       torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'torusSize' },
       material: false,
       wireframe: false,
-      opacity: { value: '0.7', min: '0.05', max: '1', step: '0.05', label: 'opacity' },
+      opacity: { value: '0.7', min: '0.01', max: '1', step: '0.01', label: 'opacity' },
     }),
   });
 
@@ -38,7 +38,7 @@ function RotatingTorus(props) {
       {material ? (
         <meshPhysicalMaterial
           color={currentBackground[0]}
-          transparent={false}
+          transparent={true}
           roughness={0.5}
           clearcoat={0.5}
           metalness={0.5}
@@ -72,7 +72,7 @@ function RotatingIcosahedron(props) {
 
   const [active, setActive] = useState(false);
 
-  const { icosahedronSize, material, wireframe, shape } = useControls({
+  const { size, material, wireframe, shape } = useControls({
     solid: folder({
       shape: {
         options: {
@@ -83,15 +83,12 @@ function RotatingIcosahedron(props) {
           icosahedron: 'icosahedron',
         },
       },
-      icosahedronSize: { value: '1', min: '0.5', max: '3', step: '0.25', label: 'icosahedronSize' },
+      size: { value: '1', min: '0.5', max: '3', step: '0.25', label: 'size' },
       material: false,
       wireframe: false,
     }),
   });
 
-  // tetrahedron, cube, octahedron, dodecahedron, icosahedron;
-
-  //   const solid = () => {
   let solid = <boxGeometry />;
   switch (shape) {
     case 'tetrahedron':
@@ -111,14 +108,8 @@ function RotatingIcosahedron(props) {
       break;
   }
 
-  console.log('solid', solid);
-  console.log('dodecahedron geometry', <dodecahedronGeometry />);
-  //   };
-
   return (
-    <mesh {...props} ref={Mesh} scale={icosahedronSize} onClick={() => setActive(!active)}>
-      {/* {geometry ? <boxGeometry /> : <icosahedronGeometry />} */}
-
+    <mesh {...props} ref={Mesh} scale={size} onClick={() => setActive(!active)}>
       {solid}
       {material ? (
         <meshPhysicalMaterial
@@ -141,48 +132,7 @@ function RotatingIcosahedron(props) {
   );
 }
 
-function BottomPlane(props) {
-  const Mesh = React.useRef();
-  const { currentBackground } = useContext(ColorContext);
-
-  const waterDisp = useTexture('./images/Water_001_DISP.png');
-  //   const waterSpec = useTexture('./images/Water_001_SPEC.jpg');
-  //   const waterOcc = useTexture('./images/Water_001_OCC.jpg');
-  //   const waterNorm = useTexture('./images/Water_001_NORM.jpg');
-  const waterColor = useTexture('./images/Water_001_COLOR.jpg');
-
-  const { toggleBottomPlane } = useControls({
-    toggleBottomPlane: false,
-  });
-
-  return (
-    <mesh
-      {...props}
-      ref={Mesh}
-      receiveShadow
-      rotation={[4.7, 0, 0]}
-      position={[0, -4, 0]}
-      // onClick={() => setActive(!active)}
-      // onPointerOver={() => setHover(true)}
-      // onPointerOut={() => setHover(false)}
-    >
-      {toggleBottomPlane ? true : <planeGeometry args={[70, 40, 40, 40]} />}
-      <meshLambertMaterial
-        color={currentBackground[1]}
-        displacementMap={waterDisp}
-        displacementScale={currentBackground.length}
-        // specularMap={waterSpec}
-        // normalMap={waterNorm}
-        // aoMap={waterOcc}
-        side={DoubleSide}
-        map={waterColor}
-        wireframe={true}
-      />
-    </mesh>
-  );
-}
-
-function TopPlane(props) {
+function Planes(props) {
   const Mesh = React.useRef();
   const { currentBackground } = useContext(ColorContext);
 
@@ -190,34 +140,44 @@ function TopPlane(props) {
   const waterSpec = useTexture('./images/Water_001_SPEC.jpg');
   const waterOcc = useTexture('./images/Water_001_OCC.jpg');
   const waterNorm = useTexture('./images/Water_001_NORM.jpg');
+  const waterColor = useTexture('./images/Water_001_COLOR.jpg');
 
-  const { toggleTopPlane } = useControls({
-    toggleTopPlane: false,
+  const { togglePlanes } = useControls({
+    togglePlanes: false,
   });
 
   return (
-    <mesh
-      {...props}
-      ref={Mesh}
-      receiveShadow
-      rotation={[4.7, 0, 0]}
-      position={[0, 4, 0]}
-      // onClick={() => setActive(!active)}
-      // onPointerOver={() => setHover(true)}
-      // onPointerOut={() => setHover(false)}
-    >
-      {toggleTopPlane ? true : <planeGeometry args={[70, 40, 25, 25]} />}
-      <meshLambertMaterial
-        color={currentBackground[1]}
-        displacementMap={waterDisp}
-        displacementScale={currentBackground.length}
-        specularMap={waterSpec}
-        normalMap={waterNorm}
-        aoMap={waterOcc}
-        side={DoubleSide}
-        wireframe={true}
-      />
-    </mesh>
+    <>
+      <mesh {...props} ref={Mesh} receiveShadow rotation={[4.7, 0, 0]} position={[0, 4, 0]}>
+        {togglePlanes ? true : <planeGeometry args={[70, 40, 25, 25]} />}
+        <meshLambertMaterial
+          color={currentBackground[1]}
+          displacementMap={waterDisp}
+          displacementScale={currentBackground.length}
+          specularMap={waterSpec}
+          normalMap={waterNorm}
+          aoMap={waterOcc}
+          side={DoubleSide}
+          wireframe={true}
+        />
+      </mesh>
+
+      <mesh {...props} ref={Mesh} receiveShadow rotation={[4.7, 0, 0]} position={[0, -4, 0]}>
+        {togglePlanes ? true : <planeGeometry args={[70, 40, 40, 40]} />}
+        <meshLambertMaterial
+          color={currentBackground[1]}
+          displacementMap={waterDisp}
+          map={waterColor}
+          displacementScale={currentBackground.length}
+          // specularMap={waterSpec}
+          // normalMap={waterNorm}
+          // aoMap={waterOcc}
+          side={DoubleSide}
+          //   map={waterColor}
+          wireframe={true}
+        />
+      </mesh>
+    </>
   );
 }
 
@@ -231,12 +191,11 @@ export default function Visualizer() {
   return (
     <div className="visualizer">
       <Canvas>
-        <BottomPlane />
         <RotatingTorus />
         <RotatingIcosahedron />
         {shadows ? false : <ambientLight color={bg} />}
         <directionalLight />
-        <TopPlane />
+        <Planes />
       </Canvas>
     </div>
   );
