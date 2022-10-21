@@ -46,11 +46,12 @@ export default function About() {
         className="nathan">
         <img className="headshot" src={`${process.env.PUBLIC_URL}/images/nathan.jfif`} />
         <h2>Nathan Burgess</h2>
-        <p>Hi, my name is Nathan, an artist and former math teacher turned software engineer
-          based in Portland, OR. While I did study how to play the piano for ten years as a child,
-          I sadly remember nothing about how to play. I&apos;m a creative problem-solver who is always learning new 
-          skills, and have a history of experience in project management and running 
-          my own businesses.</p>
+        <p>Hi! My name&apos;s Nathan, I&apos;m a software engineer, artist,
+          and former math teacher based in Portland, OR. I run a digital art
+          business focused on the latest developments in AI image generation.
+          It&apos;s been a blast working on Sound Palette with this awesome team,
+          practicing the strange art of synaesthetic design. Though I&apos;ve forgotten
+          all my piano lessons from childhood, I can play QWERTY okay.</p>
         <span><strong>Favorite Instrument:</strong> Human Voice</span>
         <div>
           <a href="https://github.com/nathburg">
