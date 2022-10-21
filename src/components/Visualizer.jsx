@@ -16,13 +16,13 @@ function RotatingTorus(props) {
 
   const { speedX, speedY, speedZ, torusSize, material, wireframe, opacity } = useControls({
     torus: folder({
-      speedX: { value: '1.1', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedX' },
-      speedY: { value: '1.2', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedY' },
-      speedZ: { value: '1.4', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedZ' },
-      torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'torusSize' },
+      speedX: { value: '1.1', min: '0.1', max: '4', step: '0.25', label: 'speedX' },
+      speedY: { value: '1.2', min: '0.1', max: '4', step: '0.25', label: 'speedY' },
+      speedZ: { value: '1.4', min: '0.1', max: '4', step: '0.25', label: 'speedZ' },
+      torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'size' },
+      opacity: { value: '0.7', min: '0.01', max: '1', step: '0.01', label: 'opacity' },
       material: false,
       wireframe: false,
-      opacity: { value: '0.7', min: '0.01', max: '1', step: '0.01', label: 'opacity' },
     }),
   });
 
@@ -72,7 +72,7 @@ function RotatingIcosahedron(props) {
 
   const [active, setActive] = useState(false);
 
-  const { size, material, wireframe, shape } = useControls({
+  const { size, material, wireframe, shape, opacity } = useControls({
     solid: folder({
       shape: {
         options: {
@@ -84,6 +84,7 @@ function RotatingIcosahedron(props) {
         },
       },
       size: { value: '1', min: '0.5', max: '3', step: '0.25', label: 'size' },
+      opacity: { value: '0.7', min: '0.01', max: '1', step: '0.01', label: 'opacity' },
       material: false,
       wireframe: false,
     }),
@@ -118,12 +119,16 @@ function RotatingIcosahedron(props) {
           clearcoat={0.5}
           metalness={0.5}
           shininess={150}
+          transparent={true}
+          opacity={opacity}
           wireframe={wireframe}
         />
       ) : (
         <meshPhongMaterial
           color={currentBackground[1]}
           shininess={150}
+          transparent={true}
+          opacity={opacity}
           wireframe={wireframe}
           roughness={0.05}
         />
@@ -142,14 +147,16 @@ function Planes(props) {
   const waterNorm = useTexture('./images/Water_001_NORM.jpg');
   const waterColor = useTexture('./images/Water_001_COLOR.jpg');
 
-  const { togglePlanes } = useControls({
-    togglePlanes: false,
+  const { toggleGrid } = useControls({
+    atmosphere: folder({
+      toggleGrid: false,
+    }),
   });
 
   return (
     <>
       <mesh {...props} ref={Mesh} receiveShadow rotation={[4.7, 0, 0]} position={[0, 4, 0]}>
-        {togglePlanes ? true : <planeGeometry args={[70, 40, 25, 25]} />}
+        {toggleGrid ? true : <planeGeometry args={[70, 40, 25, 25]} />}
         <meshLambertMaterial
           color={currentBackground[1]}
           displacementMap={waterDisp}
@@ -163,17 +170,16 @@ function Planes(props) {
       </mesh>
 
       <mesh {...props} ref={Mesh} receiveShadow rotation={[4.7, 0, 0]} position={[0, -4, 0]}>
-        {togglePlanes ? true : <planeGeometry args={[70, 40, 40, 40]} />}
+        {toggleGrid ? true : <planeGeometry args={[70, 40, 40, 40]} />}
         <meshLambertMaterial
           color={currentBackground[1]}
           displacementMap={waterDisp}
           map={waterColor}
           displacementScale={currentBackground.length}
-          // specularMap={waterSpec}
-          // normalMap={waterNorm}
-          // aoMap={waterOcc}
+          specularMap={waterSpec}
+          normalMap={waterNorm}
+          aoMap={waterOcc}
           side={DoubleSide}
-          //   map={waterColor}
           wireframe={true}
         />
       </mesh>
@@ -184,7 +190,7 @@ function Planes(props) {
 export default function Visualizer() {
   const { bg, shadows } = useControls({
     atmosphere: folder({
-      bg: { value: '#fff', label: 'ambientLightColor' },
+      bg: { value: '#fff', label: 'lightColor' },
       shadows: { value: false, label: 'shadows' },
     }),
   });
