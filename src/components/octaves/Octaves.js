@@ -54,11 +54,11 @@ export default function Octaves() {
           }
         }}
       >
-        Octave 🔽 (Press z)
+        Octave 🔽 (&apos;Z&apos; Key)
       </button>
       <div className="octave-display-container">
         <div>Range</div>
-        <div>
+        <div className="range">
           C{note}-F{Number(note) + 1}
         </div>
       </div>
@@ -75,7 +75,7 @@ export default function Octaves() {
           }
         }}
       >
-        Octave 🔼 (Press /)
+        Octave 🔼 (&apos;/&apos; Key)
       </button>
     </div>
   );

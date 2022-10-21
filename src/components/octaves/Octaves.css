@@ -2,18 +2,21 @@
   display: flex;
   margin: 10px;
   justify-content: space-around;
-  font-size: .5em;
+  font-size: .8em;
 }
 
 .octave-button {
   margin: 5px;
-  font-size: .5em;
+  font-size: 1em;
   background-color: rgba(216, 216, 216, 0.203);
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  padding: 2px;
+  padding: 5px;
   color: white;
+}
+.octave-button:hover {
+ background-color:rgba(248, 248, 248, 0.376);
 }
 
 .octave-display-container {
@@ -22,4 +25,9 @@
   align-items: center;
   color: white;
   flex-direction: column;
+  padding: 8px;
+}
+
+.range {
+  font-weight: bold;
 }
