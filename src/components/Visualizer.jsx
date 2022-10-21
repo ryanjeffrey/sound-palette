@@ -1,22 +1,29 @@
 /* eslint-disable react/no-unknown-property */
 import React from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useControls } from 'leva';
+import { folder, useControls } from 'leva';
 import { useContext } from 'react';
 import { ColorContext } from '../ColorContext';
 
 import './Visualizer.css';
 import { useTexture } from '@react-three/drei';
 import { DoubleSide } from 'three';
+import { useState } from 'react';
 
 function RotatingTorus(props) {
   const Mesh = React.useRef();
   const { currentBackground } = useContext(ColorContext);
 
-  const { speedX, speedY, speedZ } = useControls({
-    speedX: { value: '1.1', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedX' },
-    speedY: { value: '1.2', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedY' },
-    speedZ: { value: '1.4', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedZ' },
+  const { speedX, speedY, speedZ, torusSize, material, wireframe, opacity } = useControls({
+    torus: folder({
+      speedX: { value: '1.1', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedX' },
+      speedY: { value: '1.2', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedY' },
+      speedZ: { value: '1.4', min: '0.1', max: '4', step: '0.25', label: 'torusSpeedZ' },
+      torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'torusSize' },
+      material: false,
+      wireframe: false,
+      opacity: { value: '0.7', min: '0.01', max: '1', step: '0.01', label: 'opacity' },
+    }),
   });
 
   useFrame(({ clock }) => {
@@ -26,21 +33,28 @@ function RotatingTorus(props) {
     Mesh.current.rotation.y = a * speedZ;
   });
 
-  const { torusSize } = useControls({
-    torusSize: { value: '2', min: '1', max: '4', step: '0.5', label: 'torusSize' },
-  });
-
-  const { wireframe } = useControls({ wireframe: false });
-
   return (
     <mesh {...props} ref={Mesh} scale={torusSize}>
-      <meshPhysicalMaterial
-        color={currentBackground[0]}
-        roughness={0}
-        // transparent={true}
-        opacity={0.7}
-        wireframe={wireframe}
-      />
+      {material ? (
+        <meshPhysicalMaterial
+          color={currentBackground[0]}
+          transparent={true}
+          roughness={0.5}
+          clearcoat={0.5}
+          metalness={0.5}
+          shininess={150}
+          opacity={opacity}
+          wireframe={wireframe}
+        />
+      ) : (
+        <meshPhysicalMaterial
+          color={currentBackground[0]}
+          roughness={0}
+          transparent={true}
+          opacity={opacity}
+          wireframe={wireframe}
+        />
+      )}
       <torusGeometry args={[1, 0.2, 48, 120]} />
     </mesh>
   );
@@ -56,25 +70,69 @@ function RotatingIcosahedron(props) {
     Mesh.current.rotation.z = a * Math.PI;
   });
 
-  const { icosahedronSize } = useControls({
-    icosahedronSize: { value: '1', min: '0.5', max: '3', step: '0.25', label: 'icosahedronSize' },
+  const [active, setActive] = useState(false);
+
+  const { size, material, wireframe, shape } = useControls({
+    solid: folder({
+      shape: {
+        options: {
+          tetrahedron: 'tetrahedron',
+          cube: 'cube',
+          octahedron: 'octahedron',
+          dodecahedron: 'dodecahedron',
+          icosahedron: 'icosahedron',
+        },
+      },
+      size: { value: '1', min: '0.5', max: '3', step: '0.25', label: 'size' },
+      material: false,
+      wireframe: false,
+    }),
   });
+
+  let solid = <boxGeometry />;
+  switch (shape) {
+    case 'tetrahedron':
+      solid = <tetrahedronGeometry />;
+      break;
+    case 'cube':
+      solid = <boxGeometry />;
+      break;
+    case 'octahedron':
+      solid = <octahedronGeometry />;
+      break;
+    case 'dodecahedron':
+      solid = <dodecahedronGeometry />;
+      break;
+    case 'icosahedron':
+      solid = <icosahedronGeometry />;
+      break;
+  }
+
   return (
-    <mesh
-      {...props}
-      ref={Mesh}
-      scale={icosahedronSize}
-      // onClick={() => setActive(!active)}
-      // onPointerOver={() => setHover(true)}
-      // onPointerOut={() => setHover(false)}
-    >
-      <icosahedronGeometry />
-      <meshPhysicalMaterial color={currentBackground[1]} roughness={0.1} />
+    <mesh {...props} ref={Mesh} scale={size} onClick={() => setActive(!active)}>
+      {solid}
+      {material ? (
+        <meshPhysicalMaterial
+          color={currentBackground[1]}
+          roughness={0.5}
+          clearcoat={0.5}
+          metalness={0.5}
+          shininess={150}
+          wireframe={wireframe}
+        />
+      ) : (
+        <meshPhongMaterial
+          color={currentBackground[1]}
+          shininess={150}
+          wireframe={wireframe}
+          roughness={0.05}
+        />
+      )}
     </mesh>
   );
 }
 
-function BottomPlane(props) {
+function Planes(props) {
   const Mesh = React.useRef();
   const { currentBackground } = useContext(ColorContext);
 
@@ -83,81 +141,61 @@ function BottomPlane(props) {
   const waterOcc = useTexture('./images/Water_001_OCC.jpg');
   const waterNorm = useTexture('./images/Water_001_NORM.jpg');
   const waterColor = useTexture('./images/Water_001_COLOR.jpg');
-  
-  return (
-    <mesh
-      {...props}
-      ref={Mesh}
-      receiveShadow
-      rotation={[4.7, 0, 0]}
-      position={[0, -4, 0]}
-      // onClick={() => setActive(!active)}
-      // onPointerOver={() => setHover(true)}
-      // onPointerOut={() => setHover(false)}
-    >
-      <planeGeometry args={[70, 40, 40, 40]} />
-      <meshLambertMaterial
-        color={currentBackground[1]}
-        displacementMap={waterDisp}
-        displacementScale={currentBackground.length}
-        specularMap={waterSpec}
-        normalMap={waterNorm}
-        aoMap={waterOcc}
-        side={DoubleSide}
-        map={waterColor}
-        wireframe={true}
-      />
-    </mesh>
-  );
-}
 
-function TopPlane(props) {
-  const Mesh = React.useRef();
-  const { currentBackground } = useContext(ColorContext);
-
-  const waterDisp = useTexture('./images/Water_001_DISP.png');
-  const waterSpec = useTexture('./images/Water_001_SPEC.jpg');
-  const waterOcc = useTexture('./images/Water_001_OCC.jpg');
-  const waterNorm = useTexture('./images/Water_001_NORM.jpg');
+  const { togglePlanes } = useControls({
+    togglePlanes: false,
+  });
 
   return (
-    <mesh
-      {...props}
-      ref={Mesh}
-      receiveShadow
-      rotation={[4.7, 0, 0]}
-      position={[0, 4, 0]}
-      // onClick={() => setActive(!active)}
-      // onPointerOver={() => setHover(true)}
-      // onPointerOut={() => setHover(false)}
-    >
-      <planeGeometry args={[70, 40, 25, 25]} />
-      <meshLambertMaterial
-        color={currentBackground[1]}
-        displacementMap={waterDisp}
-        displacementScale={currentBackground.length}
-        specularMap={waterSpec}
-        normalMap={waterNorm}
-        aoMap={waterOcc}
-        side={DoubleSide}
-        wireframe={true}
-      />
-    </mesh>
+    <>
+      <mesh {...props} ref={Mesh} receiveShadow rotation={[4.7, 0, 0]} position={[0, 4, 0]}>
+        {togglePlanes ? true : <planeGeometry args={[70, 40, 25, 25]} />}
+        <meshLambertMaterial
+          color={currentBackground[1]}
+          displacementMap={waterDisp}
+          displacementScale={currentBackground.length}
+          specularMap={waterSpec}
+          normalMap={waterNorm}
+          aoMap={waterOcc}
+          side={DoubleSide}
+          wireframe={true}
+        />
+      </mesh>
+
+      <mesh {...props} ref={Mesh} receiveShadow rotation={[4.7, 0, 0]} position={[0, -4, 0]}>
+        {togglePlanes ? true : <planeGeometry args={[70, 40, 40, 40]} />}
+        <meshLambertMaterial
+          color={currentBackground[1]}
+          displacementMap={waterDisp}
+          map={waterColor}
+          displacementScale={currentBackground.length}
+          // specularMap={waterSpec}
+          // normalMap={waterNorm}
+          // aoMap={waterOcc}
+          side={DoubleSide}
+          //   map={waterColor}
+          wireframe={true}
+        />
+      </mesh>
+    </>
   );
 }
 
 export default function Visualizer() {
-  // const { currentBackground } = useContext(ColorContext);
-  const { bg } = useControls({ bg: { value: '#fff', label: 'ambientLightColor' } });
+  const { bg, shadows } = useControls({
+    atmosphere: folder({
+      bg: { value: '#fff', label: 'ambientLightColor' },
+      shadows: { value: false, label: 'shadows' },
+    }),
+  });
   return (
     <div className="visualizer">
       <Canvas>
-        <BottomPlane />
         <RotatingTorus />
         <RotatingIcosahedron />
-        <ambientLight color={bg} />
+        {shadows ? false : <ambientLight color={bg} />}
         <directionalLight />
-        <TopPlane />
+        <Planes />
       </Canvas>
     </div>
   );
