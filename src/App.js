@@ -16,7 +16,7 @@ function App() {
   const steps = [
     {
       target: '.color-div',
-      content: 'Here you can choose a different color for each piano key.',
+      content: 'Welcome to Sound Palette, your synesthetic 3D playground! Here you can choose a different color for each piano key.',
     },
     {
       target: '.piano-wrapper',
@@ -32,7 +32,7 @@ function App() {
     },
     {
       target: '.leva-c-hBtFDW',
-      content: 'Use this menu to control rotation, speed, size, and geometry of the 3D objects',
+      content: 'Use this menu to control rotation, speed, size, and geometry of the 3D objects. Have fun!',
     },
   ];
   const [run, setRun] = useState(true);
