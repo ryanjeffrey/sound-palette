@@ -152,7 +152,7 @@ export default function About() {
           <a href="https://github.com/ryanjeffrey">
             <img className='logo' src={`${process.env.PUBLIC_URL}/images/githublogo.png`}></img>
           </a>
-          <a href="https://www.linkedin.com/in/ryan-smith-219614230/">
+          <a href="https://www.linkedin.com/in/ryan-jeffrey-smith/">
             <img className='logo' src={`${process.env.PUBLIC_URL}/images/linkedinlogo.png`}></img>
           </a>
         </div>
